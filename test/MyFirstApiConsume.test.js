@@ -37,12 +37,10 @@ describe("First Api Tests", () => {
             github: true,
         };
 
-        const response = await axios.patch("https://httpbin.org/patch", {
-            myData,
-        });
+        const response = await axios.patch("https://httpbin.org/patch", myData);
 
         expect(response.status).to.equal(StatusCodes.OK);
-        expect(response.data.json).to.have.property("myData");
+        expect(response.data.json).to.be.eql(myData);
     });
 
     it("Consume PUT Service", async () => {
@@ -52,12 +50,9 @@ describe("First Api Tests", () => {
             director: "George Lucas",
         };
 
-        const response = await axios.put("https://httpbin.org/anything", {
-            movie,
-        });
-
+        const response = await axios.put("https://httpbin.org/anything", movie);
         expect(response.status).to.equal(StatusCodes.OK);
-        expect(response.data.json).to.have.property("movie");
+        expect(response.data.json).to.be.eql(movie);
     });
 
     it("Consume DELETE Service", async () => {
@@ -66,11 +61,12 @@ describe("First Api Tests", () => {
             age: 30,
         };
 
-        const response = await axios.delete("https://httpbin.org/anything", {
-            user,
-        });
+        const response = await axios.delete(
+            "https://httpbin.org/anything",
+            user
+        );
 
         expect(response.status).to.equal(StatusCodes.OK);
-        expect(response.config.user).to.be.eql(user);
+        expect(response.config).contains(user);
     });
 });
