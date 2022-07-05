@@ -50,29 +50,30 @@ describe('Stage 8 - GET: Repositories testing', () => {
       expect(zipFile.headers['content-type']).to.equal('application/zip');
     });
 
-    let readmeFile;
-    before(async () => {
-      readmeFile = await axios.get(`${repository.url}/readme`);
-    });
-    it('5. Readme verifying', async () => {
-      const verifyReadme = {
-        name: 'README.md',
-        path: 'README.md',
-        sha: '360eee6c223cee31e2a59632a2bb9e710a52cdc0'
-      };
+    describe('Readme testing', () => {
+      let readmeFile;
+      before(async () => {
+        readmeFile = await axios.get(`${repository.url}/readme`);
+      });
+      it('5. Readme verifying', async () => {
+        const verifyReadme = {
+          name: 'README.md',
+          path: 'README.md',
+          sha: '360eee6c223cee31e2a59632a2bb9e710a52cdc0'
+        };
 
-      expect(readmeFile.status).to.equal(StatusCodes.OK);
-      expect(readmeFile.data).to.containSubset(verifyReadme);
-    });
-    // });
+        expect(readmeFile.status).to.equal(StatusCodes.OK);
+        expect(readmeFile.data).to.containSubset(verifyReadme);
+      });
 
-    it('6. Readme downloading', async () => {
-      const readmeDownload = await axios.get(`${readmeFile.data.download_url}`);
-      const md5Readme = '3449c9e5e332f1dbb81505cd739fbf3f';
+      it('6. Readme downloading', async () => {
+        const readmeDownload = await axios.get(`${readmeFile.data.download_url}`);
+        const md5Readme = '3449c9e5e332f1dbb81505cd739fbf3f';
 
-      expect(readmeDownload.status).to.equal(StatusCodes.OK);
-      expect(readmeDownload.headers['content-type']).to.equal('text/plain; charset=utf-8');
-      expect(md5(readmeDownload)).to.equal(md5Readme);
+        expect(readmeDownload.status).to.equal(StatusCodes.OK);
+        expect(readmeDownload.headers['content-type']).to.equal('text/plain; charset=utf-8');
+        expect(md5(readmeDownload)).to.equal(md5Readme);
+      });
     });
   });
 });
