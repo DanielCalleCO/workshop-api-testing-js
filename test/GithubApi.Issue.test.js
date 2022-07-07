@@ -12,7 +12,7 @@ const keyPath = axios.create({
   headers: { Authorization: `token ${process.env.ACCESS_TOKEN}` }
 });
 
-describe.only('Stage 10 - POST & PATCH', () => {
+describe('Stage 10 - POST & PATCH', () => {
   let userLogged;
   before(async () => {
     userLogged = await keyPath.get(`${urlBase}`);
