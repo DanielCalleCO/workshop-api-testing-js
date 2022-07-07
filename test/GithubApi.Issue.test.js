@@ -35,7 +35,6 @@ describe('Stage 10 - POST & PATCH', () => {
 
     it('Selected repository', async () => {
       expect(selectedRepo.name).to.equal(repository);
-    //   console.log(selectedRepo);
     });
 
     describe('Creating issue', async () => {
