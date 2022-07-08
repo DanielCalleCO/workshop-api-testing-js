@@ -11,7 +11,7 @@ const keyPath = axios.create({
   headers: { Authorization: `token ${process.env.ACCESS_TOKEN}` }
 });
 
-describe.only('Stage 11 - DELETE', () => {
+describe('Stage 11 - DELETE', () => {
   const gistBody = {
     description: 'Example of a gist',
     public: false,
@@ -56,13 +56,12 @@ describe.only('Stage 11 - DELETE', () => {
   });
 
   describe('Gist recheck', () => {
-    // before(async () => {
-    //   gistCheck = await keyPath.get(gist.data.url);
-    // });
-
     it('Gist does not exist anymore', async () => {
-      const gistCheck = await keyPath.get(gist.data.url);
-      expect(gistCheck.status).to.be.equal(StatusCodes.NOT_FOUND);
+      try {
+        await keyPath.get(gist.data.url);
+      } catch (err) {
+        expect(err.response.status).to.be.equal(StatusCodes.NOT_FOUND);
+      }
     });
   });
 });
