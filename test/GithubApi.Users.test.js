@@ -13,19 +13,31 @@ const keyPath = axios.create({
   }
 });
 
-const params = {
-  per_page: 40
+let params = {
+  per_page: 10
 };
 
-describe.only('Stage 12 - Query parameters: Users', () => {
+describe('Stage 12 - Query parameters: Users', () => {
   let users;
   before(async () => {
-    users = await keyPath.get(`${urlBase}`, params);
+    users = await keyPath.get(`${urlBase}`, { params });
   });
 
-  
-  it('Github users', async () => {
+  it('Github users - 10 per page', async () => {
     expect(users.status).to.be.eql(StatusCodes.OK);
-    expect(users.data).to.have.length(40);
+    expect(users.data).to.have.length(10);
+  });
+
+  describe('100 Users', () => {
+    before(async () => {
+      params = {
+        per_page: 100
+      };
+      users = await keyPath.get(`${urlBase}`, { params });
+    });
+    it('Github users - 100 per page', async () => {
+      expect(users.status).to.be.eql(StatusCodes.OK);
+      expect(users.data).to.have.length(100);
+    });
   });
 });
