@@ -11,7 +11,7 @@ const keyPath = axios.create({
   headers: { Authorization: `token ${process.env.ACCESS_TOKEN}` }
 });
 
-describe.only('Given event Github API resources', () => {
+describe('Given event Github API resources', () => {
   describe('When wanna verify the List public events', () => {
     let response;
 
