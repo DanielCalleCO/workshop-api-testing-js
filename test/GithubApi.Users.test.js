@@ -13,7 +13,7 @@ const keyPath = axios.create({
   }
 });
 
-describe.only('Stage 12 - Query parameters: Users', () => {
+describe('Stage 12 - Query parameters: Users', () => {
   let params;
   let users;
 
