@@ -13,31 +13,45 @@ const keyPath = axios.create({
   }
 });
 
-let params = {
-  per_page: 10
-};
-
-describe('Stage 12 - Query parameters: Users', () => {
+describe.only('Stage 12 - Query parameters: Users', () => {
+  let params;
   let users;
-  before(async () => {
-    users = await keyPath.get(`${urlBase}`, { params });
+
+  describe('Users without modify', () => {
+    before(async () => {
+      users = await keyPath.get(`${urlBase}`);
+    });
+
+    it('Github users - 30 per page', async () => {
+      expect(users.status).to.be.eql(StatusCodes.OK);
+      expect(users.data).to.have.length(30);
+    });
   });
 
-  it('Github users - 10 per page', async () => {
-    expect(users.status).to.be.eql(StatusCodes.OK);
-    expect(users.data).to.have.length(10);
-  });
-
-  describe('100 Users', () => {
+  describe('Modifying users per page', () => {
     before(async () => {
       params = {
-        per_page: 100
+        per_page: 10
       };
       users = await keyPath.get(`${urlBase}`, { params });
     });
-    it('Github users - 100 per page', async () => {
+
+    it('Github users - 10 per page', async () => {
       expect(users.status).to.be.eql(StatusCodes.OK);
-      expect(users.data).to.have.length(100);
+      expect(users.data).to.have.length(10);
+    });
+
+    describe('100 Users', () => {
+      before(async () => {
+        params = {
+          per_page: 100
+        };
+        users = await keyPath.get(`${urlBase}`, { params });
+      });
+      it('Github users - 100 per page', async () => {
+        expect(users.status).to.be.eql(StatusCodes.OK);
+        expect(users.data).to.have.length(100);
+      });
     });
   });
 });
