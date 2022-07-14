@@ -35,6 +35,7 @@
     },
     "dependencies": {
         "axios": "^0.27.2",
-        "chai-json-schema": "^1.5.1"
+        "chai-json-schema": "^1.5.1",
+        "isomorphic-fetch": "^3.0.0"
     }
 }
